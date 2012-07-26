@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnableContainer 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	width="450" height="220"
+	styleName="windowMessage">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			[Bindable]
+			public var msg:String;
+
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:TextArea id="test"
+		left="10" right="10" top="60" bottom="52" 
+		text="{msg}" 
+		editable="false" 
+		selectable="true"
+		selectionHighlighting="always"/>
+	
+</s:SkinnableContainer>

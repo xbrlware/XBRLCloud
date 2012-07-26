@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnableContainer 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx" 
+	xmlns:comps="com.xbrlcloud.assurance.main.ui.components.*">
+	
+	<fx:Script>
+		<![CDATA[
+			import com.xbrlcloud.assurance.main.ui.presenters.HeaderPresentationModel;
+			import com.xbrlcloud.assurance.shared.ResourceFinder;
+			
+			[Inject]
+			[Bindable]
+			public var presenter:HeaderPresentationModel;
+			
+		]]>
+	</fx:Script>
+	
+	
+	<comps:TitleBar id="titleBar" top="65" horizontalCenter="0"/>
+	
+	<!--- Button Bar _____________________________________________________________________________________________________-->
+	
+	<s:ButtonBar id="menu" dataProvider="{presenter.menuCollection}" top="101" left="20" requireSelection="true"  />
+	
+	
+	<!--- Application Bar Region _________________________________________________________________________________________-->
+	
+	<s:BitmapImage source="{ResourceFinder.application_bar_divisor}" right="132" top="57" />
+	
+	<comps:AbstractButton id="urlExportButton"
+						  right="9" top="57"
+						  label="Export URL"
+						  icon="{ResourceFinder.application_icon_url_export}"
+						  buttonMode="true"
+						  styleName="applicationButton"
+						  click="presenter.exportButtonHandler()"/>
+	
+	<!--<s:SkinnableContainer id="section" right="10" top="96" width="160" height="35">
+		
+		<s:HGroup top="5" left="40">
+			
+			<comps:SectionButton icon="{ResourceFinder.documents_icon}" 
+								 width="50" height="35"
+								 toolTip="Documents"/>
+			
+			<s:BitmapImage  source="{ResourceFinder.separator}" />
+			
+			<comps:SectionButton icon="{ResourceFinder.taxonomy_concepts_icon}" 
+								 width="50" height="35"
+								 toolTip="Taxonomy Concepts"/>
+			
+		</s:HGroup>
+	
+	</s:SkinnableContainer>-->
+	
+</s:SkinnableContainer>

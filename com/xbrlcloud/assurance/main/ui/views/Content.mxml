@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnableContainer 
+			xmlns:fx         = "http://ns.adobe.com/mxml/2009" 
+			xmlns:s          = "library://ns.adobe.com/flex/spark" 
+			xmlns:mx         = "library://ns.adobe.com/flex/mx" 
+			xmlns:validation = "com.xbrlcloud.assurance.validation.ui.*"
+			xmlns:networks   = "com.xbrlcloud.assurance.networks.ui.*">
+	
+	<s:states>
+		<s:State name="fullMode"     />
+		<s:State name="standardMode" />
+	</s:states>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			import com.xbrlcloud.assurance.main.ui.presenters.ContentPresentationModel;
+
+			[Inject]
+			[Bindable]
+			public var presenter:ContentPresentationModel;
+			
+			[PostConstruct]
+			public function initPresenter():void
+			{
+				presenter.view = this;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<mx:HDividedBox width="100%" height="100%" left="10" right="10" >
+		
+		<networks:NetworkList id="networksList" />
+			
+		<mx:VDividedBox width="100%" height="100%" >
+			
+			<mx:Panel title="{networkConcepts.presenter.selectedNetwork.definition}" styleName="straightPanel" width="100%" height="100%">
+				
+				<mx:HDividedBox width="100%"    height="100%" 
+								paddingTop="1"  paddingBottom="1"
+								paddingLeft="1" paddingRight="1">
+					
+					<networks:NetworkConcepts id="networkConcepts" />
+				<!--	344820410101341
+					40090301
+					40090303-->
+					<networks:NetworkDetails  id="networkDetails"  />
+					
+				</mx:HDividedBox>
+				
+			</mx:Panel>
+			
+			<validation:ValidationReport includeIn="fullMode" />
+			
+		</mx:VDividedBox>
+		
+	</mx:HDividedBox>
+
+	
+</s:SkinnableContainer>

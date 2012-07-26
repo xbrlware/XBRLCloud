@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<swiz:BeanProvider
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+    xmlns:swiz="http://swiz.swizframework.org" 
+	xmlns:controllers="com.xbrlcloud.assurance.networks.controllers.*" 
+	xmlns:parser="com.xbrlcloud.assurance.networks.parser.*" 
+	xmlns:abstractView="com.xbrlcloud.assurance.networks.ui.presenters.*">
+	
+	<fx:Script>
+		<![CDATA[
+			import com.xbrlcloud.assurance.networks.ui.presenters.NetworkAbstractConceptPresentationModel;
+			import com.xbrlcloud.assurance.networks.ui.presenters.NetworkConceptsPresentationModel;
+			import com.xbrlcloud.assurance.networks.ui.presenters.NetworkDetailsPresentationModel;
+			import com.xbrlcloud.assurance.networks.ui.presenters.NetworkListPresentationModel;
+			
+			//http://guest.xbrlcloud.com/rest/xbrl/http:;;guest.xbrlcloud.com;;share;public;XBRLS-ComprehensiveExample-2008-04-18;gaap;Sample-Instance-Proof.xml/networks/tree-view?media=xml
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		
+		<mx:HTTPService id="networksListService"
+						showBusyCursor="true"
+						method="GET"
+						resultFormat="e4x" />
+		
+	</fx:Declarations>
+	
+	<swiz:Prototype type="{NetworkListPresentationModel}"            singleton="true" id="networksListPresentationModel"    />
+	
+	<swiz:Prototype type="{NetworkConceptsPresentationModel}"        singleton="true" id="networksMainPresentationModel"    />
+	
+	<swiz:Prototype type="{NetworkDetailsPresentationModel}"         singleton="true" id="networksDetailsPresentationModel" />
+	
+	<swiz:Prototype type="{NetworkAbstractConceptPresentationModel}" singleton="true" id="networksMainAbstractViewPresentationModel" />
+	
+	<swiz:ServiceHelper                                                               id="networksListServiceHelper"        />
+	
+	<controllers:NetworkListController                                                id="networksListController"           />                
+	
+	<parser:NetworksXMLParser                                                         id="networksXMLParser"                />  
+	
+</swiz:BeanProvider>

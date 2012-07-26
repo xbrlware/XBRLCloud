@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="true" 
+				height="40" width="100%"
+				buttonMode="true"
+				dataChange="updateVisualization()">
+	
+	<fx:Script>
+		
+		<![CDATA[
+			
+			import com.xbrlcloud.assurance.shared.ResourceFinder;
+			import com.xbrlcloud.assurance.validation.vos.SignalVO;
+			
+			[Bindable]
+			private var icon:Class;
+			
+			private function updateVisualization():void
+			{
+				if(data.signals.length > 0)
+				{
+					showSignalAccordingToPriority();
+				}
+			}
+			
+			protected function showSignalAccordingToPriority():void
+			{
+				
+				if(data.signals.length == 1)
+				{
+					getIconBySignalSeverity(data.signals[0]);
+					return;
+				}
+				else
+				{
+					var signalSelected:SignalVO;
+					for each(var signal:SignalVO in data.signals)
+					{
+ 						if(signal.severity == "ERROR")
+						{	
+							signalSelected = signal;
+							break;
+						}
+						if(signal.severity == "WARNING")
+						{
+							signalSelected = signal;
+							continue;
+						}
+						if((signal.severity == "BEST_PRACTICE" && !signalSelected) || (signalSelected && signalSelected.severity == "INFORMATION"))
+						{
+							signalSelected = signal;
+							continue;
+						}
+						if(signal.severity == "INFORMATION" && !signalSelected)
+						{
+							signalSelected = signal;
+							continue;
+						} 
+						
+					}
+					getIconBySignalSeverity(signalSelected);
+				}
+				
+			}
+			
+			
+			private function getIconBySignalSeverity(signal:SignalVO):void
+			{
+				switch(signal.severity)
+				{
+					case "ERROR":
+						icon = ResourceFinder.validation_report_error_icon;
+					break;
+					case "INFORMATION":
+						icon = ResourceFinder.validation_report_information_icon;
+					break;
+					case "BEST_PRACTICE":
+						icon = ResourceFinder.validation_report_best_practices_icon;
+					break;
+					case "WARNING":
+						icon = ResourceFinder.validation_report_warning_icon;
+					break;
+				}
+			}
+			
+			
+
+		]]>
+	</fx:Script>
+	
+	<s:states>
+		<s:State name="normal"   />
+		<s:State name="hovered"  />
+		<s:State name="selected" />
+	</s:states>
+	
+	<s:Rect width="100%" height="100%">
+		<s:fill>
+			<s:SolidColor color="#FFFFFF" />
+		</s:fill>
+	</s:Rect>
+	
+	
+	<s:BitmapImage source.normal   = "{ResourceFinder.network_item_bg_up}"
+				   source.hovered  = "{ResourceFinder.network_item_bg_hovered}"
+				   source.selected = "{ResourceFinder.network_item_bg_selected}"
+				   right = "1" left = "1" height = "100%"/>
+	
+	<s:BitmapImage source.normal   = "{ResourceFinder.network_item_arrow_up}"
+				   source.hovered  = "{ResourceFinder.network_item_arrow_hovered}"
+				   source.selected = "{ResourceFinder.network_item_arrow_selected}"
+				   width = "11" height = "20"
+				   verticalCenter = "0" right = "5"/>
+	
+	<s:BitmapImage source="{icon}" verticalCenter="-2" left="5" visible="{(data.signals.length > 0)}" />
+	
+	<s:VGroup verticalCenter="0" left="{(data.signals.length == 0)?10:30}" right="20">
+		<s:Label text="{data}" width="100%"
+				 color.hovered="#0F6CB6" color.normal="#444D5D" color.selected="#FFFFFF"
+				 fontWeight="bold"
+				 lineThrough="false"
+				 toolTip="{data.definition}"
+				 maxDisplayedLines="1"/>
+	</s:VGroup>
+	
+	
+</s:ItemRenderer>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	layout="absolute" 
+	title="Validation Report" 
+	width="100%" height="100%">
+	
+	<fx:Script>
+		<![CDATA[
+			
+			import com.xbrlcloud.assurance.validation.ui.presenters.ValidationReportPresentationModel;
+			
+			import mx.collections.ArrayCollection;
+			
+			import spark.components.ButtonBar;
+			import spark.components.Group;
+			import spark.components.Label;
+			import spark.events.IndexChangeEvent;
+			import spark.layouts.HorizontalLayout;
+			
+			
+			public static const SHOW_ALL_SIGNALS      :String = "Show all signals:";
+			
+			public static const SHOW_SIGNALS_FILTERED :String = "Show only signals of the selected network:";
+			
+			
+			public var filterBarGroup :Group;
+			
+			public var toggleButton   :ButtonBar;
+			
+			public var filterBarLabel :Label;
+			
+			
+			[Inject]
+			[Bindable]
+			public var presenter:ValidationReportPresentationModel;
+			
+			[PostConstruct]
+			public function initPresenter():void
+			{
+				presenter.view = this;
+			}
+			
+			
+			/****************************************************************************************************************
+			* Customize the panel to add a checkbox on the title bar
+			****************************************************************************************************************/
+			
+			override protected function createChildren():void
+			{
+				
+				super.createChildren();
+				
+				if(!toggleButton)
+				{
+					filterBarGroup = new Group();
+					filterBarGroup.width = 300;
+					filterBarGroup.height = 21;
+					filterBarGroup.layout = new HorizontalLayout();
+					
+					filterBarLabel = new Label();
+					filterBarLabel.percentWidth = 100;
+					filterBarLabel.height = 23;
+					filterBarLabel.setStyle("paddingTop", 5);
+					filterBarLabel.setStyle("textAlign", "right");
+					filterBarLabel.text = SHOW_ALL_SIGNALS;
+					
+					toggleButton = new ButtonBar();
+					toggleButton.id = "validationFilterBar";
+					toggleButton.requireSelection = true;
+					toggleButton.height = 21;
+					toggleButton.addEventListener(IndexChangeEvent.CHANGE, toggleButtonHandler);
+					toggleButton.dataProvider = new ArrayCollection(["1","2"]);
+					
+					filterBarGroup.addElement(filterBarLabel);
+					filterBarGroup.addElement(toggleButton);
+					
+					rawChildren.addChild(filterBarGroup);
+				}
+			}
+			
+			
+			override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+			{
+				super.updateDisplayList(unscaledWidth, unscaledHeight);
+				filterBarGroup.move(unscaledWidth - filterBarGroup.width - 11, 7);
+			} 
+			 
+			
+			public function toggleButtonHandler(e:IndexChangeEvent):void
+			{
+				if(e.newIndex == 0)
+				{
+					filterBarLabel.text = SHOW_ALL_SIGNALS;
+					
+					if(presenter.selNetwork)
+						presenter.applyFilterBySelectedNetwork();
+				}
+				else
+				{
+					filterBarLabel.text = SHOW_SIGNALS_FILTERED;
+					
+					presenter.clearNetworkFilter();
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	
+	
+	<!-- Make sure the checkbox is just enabled when a network is selected -->
+	<!--<fx:Binding source="presenter.selNetwork" destination="checkBox.enabled" />-->
+	
+	
+	<mx:AdvancedDataGrid id="ADGValidationReport"
+						 width="100%" 
+						 height="100%" 
+						 wordWrap="true" 
+						 sortExpertMode="true"
+						 groupLabelFunction = "{presenter.groupLabelFunction}"
+						 groupIconFunction  = "{presenter.iconGroupFunction}"
+						 iconFunction       = "{presenter.iconFunction}"
+						 change="{presenter.validationReportClickHandler(event)}">
+		
+		<mx:dataProvider>
+			<mx:GroupingCollection2 id="gc" source="{presenter.signals}">
+				<mx:grouping>
+					<mx:Grouping label="severity">
+						<mx:GroupingField id="severityGroup" name="severity" />
+						<mx:GroupingField id="sectionGroup"  name="section"  />
+					</mx:Grouping>
+				</mx:grouping>
+			</mx:GroupingCollection2>
+		</mx:dataProvider>
+		
+		<mx:columns>
+			<mx:AdvancedDataGridColumn dataField="severity" headerText="Severity" width="250"  showDataTips="false" />
+			<mx:AdvancedDataGridColumn dataField="network"  headerText="Networks" width="250"  showDataTips="false" />
+			<!--<mx:AdvancedDataGridColumn dataField="uid"  headerText="UID"      width="50"   showDataTips="false" />-->
+			<mx:AdvancedDataGridColumn dataField="message"  headerText="Message"   />
+		</mx:columns>
+		
+	</mx:AdvancedDataGrid>
+</mx:Panel>

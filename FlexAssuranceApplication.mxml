@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:UI="com.xbrlcloud.assurance.main.ui.*"
+	xmlns:swiz="http://swiz.swizframework.org"
+	xmlns:logging="org.swizframework.utils.logging.*"
+	xmlns:main="com.xbrlcloud.assurance.main.beans.*"
+	xmlns:networks="com.xbrlcloud.assurance.networks.beans.*"
+	xmlns:validation="com.xbrlcloud.assurance.validation.beans.*" 
+	width="100%" height="100%">
+	
+	<fx:Style source="/../assets/css/main.css" />
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			import org.swizframework.utils.logging.SwizLogEventLevel;
+
+
+		]]>
+	</fx:Script>
+	
+	
+	<fx:Declarations>
+		
+		<swiz:Swiz>
+			
+			<swiz:beanProviders>
+				<main:MainBean                   />
+				<networks:NetworksBean           />
+				<validation:ValidationReportBean />
+			</swiz:beanProviders>
+			
+			<swiz:loggingTargets>
+				<logging:SwizTraceTarget id="myTraceTarget" />
+			</swiz:loggingTargets>
+			
+			<swiz:config>
+				<swiz:SwizConfig
+					eventPackages="com.xbrlcloud.assurance.networks.events.*,
+					               com.xbrlcloud.assurance.main.events.*,
+								   com.xbrlcloud.assurance.validation.events.*,
+					               com.xbrlcloud.assurance.shared.data.*,
+					               com.xbrlcloud.assurance.main.http.*,
+								   com.xbrlcloud.assurance.main.components.windowMessage.events.*,
+								   com.xbrlcloud.assurance.main.components.windowURLExporter.events.*" />
+			</swiz:config>
+			
+		</swiz:Swiz>
+		
+		<logging:SwizTraceTarget level="{SwizLogEventLevel.ALL}" />
+		
+	</fx:Declarations>
+	
+	<UI:Main id="main" width="100%" height="100%" minWidth="304" />
+	
+</s:Application>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<swiz:BeanProvider
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+    xmlns:swiz="http://swiz.swizframework.org" 
+	xmlns:connect="com.xbrlcloud.assurance.shared.data.*" 
+	xmlns:controllers="com.xbrlcloud.assurance.main.controllers.*" >
+	
+	<fx:Script>
+		<![CDATA[
+			import com.xbrlcloud.assurance.main.http.URLParserManager;
+			import com.xbrlcloud.assurance.main.ui.presenters.ContentPresentationModel;
+			import com.xbrlcloud.assurance.main.ui.presenters.HeaderPresentationModel;
+			import com.xbrlcloud.assurance.main.ui.presenters.MainPresentationModel;
+			import com.xbrlcloud.assurance.shared.data.NetworksSignalsDataConnect;
+		]]>
+	</fx:Script>
+	
+	<swiz:Prototype type="{MainPresentationModel}"      singleton="true" />
+	
+	<swiz:Prototype type="{HeaderPresentationModel}"    singleton="true" />
+	
+	<swiz:Prototype type="{NetworksSignalsDataConnect}" singleton="true" />
+	
+	<swiz:Prototype type="{URLParserManager}"           singleton="true" />
+	
+	<swiz:Prototype type="{ContentPresentationModel}"   singleton="true" />
+	
+	<controllers:MainController />
+	
+</swiz:BeanProvider>

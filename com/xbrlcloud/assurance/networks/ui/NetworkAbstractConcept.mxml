@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:NavigatorContent 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	width="100%" height="100%">
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			import com.xbrlcloud.assurance.networks.ui.presenters.NetworkAbstractConceptPresentationModel;
+			
+			import mx.collections.ArrayCollection;
+			
+			[Inject]
+			[Bindable]
+			public var presenter:NetworkAbstractConceptPresentationModel;
+			
+			[Bindable]
+			public var concepts:ArrayCollection;
+
+			[PostConstruct]
+			public function setView():void
+			{
+				presenter.view = this;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	
+	<mx:AdvancedDataGrid id="dgConcepts"
+						 top="0" right="0" bottom="0" left="0"
+						 displayItemsExpanded="true" 
+						 sortExpertMode="true"
+						 showHeaders="false"
+						 change="{presenter.conceptChangeHandler(event)}"
+						 iconFunction="{presenter.iconFunction}"
+						 styleFunction="{presenter.labelFunction}">
+		
+		<mx:dataProvider>
+			<mx:HierarchicalData childrenField="concepts" source="{concepts}"  id="ast"  />
+		</mx:dataProvider>
+		
+		<mx:columns>
+			<mx:AdvancedDataGridColumn dataField="label" headerText="Concepts" />
+		</mx:columns>
+		
+	</mx:AdvancedDataGrid>
+	
+</s:NavigatorContent>

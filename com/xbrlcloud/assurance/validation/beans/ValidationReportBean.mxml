@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<swiz:BeanProvider
+	xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+    xmlns:swiz="http://swiz.swizframework.org" 
+	xmlns:controllers="com.xbrlcloud.assurance.validation.controllers.*" 
+	xmlns:parser="com.xbrlcloud.assurance.validation.parser.*">
+	
+	<fx:Script>
+		<![CDATA[
+			import com.xbrlcloud.assurance.validation.ui.presenters.ValidationReportPresentationModel;
+			
+			import mx.core.FlexGlobals;
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		
+		<!-- Production ____________________________________________________________________________________________________-->
+		
+		<!--<mx:HTTPService id="validationReportService"
+		showBusyCursor="true"
+		url="http://guest.xbrlcloud.com/rest/xbrl/http:;;guest.xbrlcloud.com;;share;public;XBRLS-ComprehensiveExample-2008-04-18;gaap;Sample-Instance-Proof.xml/validation/xbrl?flavor=EDGAR_BEST&amp;media=xml"
+		resultFormat="e4x" />-->
+		
+		<mx:HTTPService id="validationReportService"
+						method="GET"
+						showBusyCursor="true"
+						resultFormat="e4x" />
+		
+	</fx:Declarations>
+	
+	<swiz:Prototype type="{ValidationReportPresentationModel}" singleton="true" />
+	
+	<swiz:ServiceHelper                     id="validationServiceHelper"        />
+	
+	<controllers:ValidationReportController id="validationReportController"     />
+	
+	<parser:ValidationReportXMLParser       id="validationReportXMLParser"      />
+	
+</swiz:BeanProvider>

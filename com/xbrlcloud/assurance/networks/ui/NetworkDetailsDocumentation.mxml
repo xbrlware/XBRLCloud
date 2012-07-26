@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:NavigatorContent 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	width="100%" height="100%"
+	label="Documentation">
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.xbrlcloud.assurance.networks.events.ConceptSelectEvent;
+			import com.xbrlcloud.assurance.networks.vos.ConceptVO;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.ListEvent;
+			
+			[Bindable]
+			[Inject(source="networksDetailsPresentationModel.selectedConcept", bind="true")]
+			public var concept:ConceptVO;
+
+		]]>
+	</fx:Script>
+	
+	<s:TextArea text="{concept.documentation}" left="0" top="0" bottom="0" right="0"/>
+	
+</s:NavigatorContent>

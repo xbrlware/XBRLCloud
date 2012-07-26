@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnableContainer 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	xmlns:views="com.xbrlcloud.assurance.main.ui.views.*">
+	
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	
+	<!--U.I___________________________________________________________________________________________________-->
+	
+	<views:Header  id="header" height="141" top="15"   left="15" right="15"   />
+	
+	<views:Content id="content" top="156"  bottom="68" left="15" right="15"   />
+	
+	<views:Footer  id="footer" height="53" bottom="15" left="15" right="15"   />
+	
+</s:SkinnableContainer>
